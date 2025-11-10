@@ -1,0 +1,22 @@
+name: Bandit Scan
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  bandit:
+    name: Run Bandit
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run Bandit
+        uses: PyCQA/bandit-action@v1
+        with:
+          path: "."
+          # optional inputs:
+          # level: medium
+          # confidence: medium
