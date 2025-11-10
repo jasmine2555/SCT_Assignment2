@@ -3,20 +3,30 @@ name: Bandit Scan
 on:
   push:
     branches: [ main ]
+  pull_request:
   workflow_dispatch:
 
 jobs:
   bandit:
-    name: Run Bandit
+    name: Run Bandit Security Scan
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run Bandit
-        uses: PyCQA/bandit-action@v1
+      - name: Set up Python
+        uses: actions/setup-python@v5
         with:
-          path: "."
-          # optional inputs:
-          # level: medium
-          # confidence: medium
+          python-version: "3.x"
+
+      - name: Install Bandit
+        run: pip install bandit
+
+      - name: Run Bandit
+        run: bandit -r . -f sarif -o bandit-results.sarif || true
+
+      - name: Upload Bandit results to GitHub Security tab
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: bandit-results.sarif
