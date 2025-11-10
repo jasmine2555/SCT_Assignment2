@@ -31,6 +31,9 @@ jobs:
       - name: Run Bandit Scan
         run: |
           echo "Running Bandit..."
+          # Ensure SARIF file exists even if no Python files are found
+          touch bandit-results.sarif
+          # Run Bandit and overwrite SARIF file if scan finds files
           bandit -r . -f sarif -o bandit-results.sarif || true
           echo "Bandit scan completed."
 
