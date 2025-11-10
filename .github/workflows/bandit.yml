@@ -6,6 +6,10 @@ on:
   pull_request:
   workflow_dispatch:
 
+permissions:
+  contents: read
+  security-events: write
+
 jobs:
   bandit:
     name: Run Bandit Security Scan
@@ -24,7 +28,9 @@ jobs:
         run: pip install bandit
 
       - name: Run Bandit
-        run: bandit -r . -f sarif -o bandit-results.sarif || true
+        run: |
+          bandit -r . -f sarif -o bandit-results.sarif || true
+          echo "Bandit scan completed."
 
       - name: Upload Bandit results to GitHub Security tab
         uses: github/codeql-action/upload-sarif@v3
