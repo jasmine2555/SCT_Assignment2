@@ -1,8 +1,9 @@
+---
 name: Bandit Scan
 
 on:
   push:
-    branches: [ main ]
+    branches: ["main"]
   pull_request:
   workflow_dispatch:
 
@@ -27,8 +28,9 @@ jobs:
       - name: Install Bandit
         run: pip install bandit
 
-      - name: Run Bandit
+      - name: Run Bandit Scan
         run: |
+          echo "Running Bandit..."
           bandit -r . -f sarif -o bandit-results.sarif || true
           echo "Bandit scan completed."
 
