@@ -1,4 +1,3 @@
-// sample.c - simple C example
 #include <stdio.h>
 
 int main() {

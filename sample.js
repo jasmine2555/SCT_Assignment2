@@ -1,6 +1,4 @@
-// sample.js - test file for CodeQL
-function sayHello(name) {
-  console.log("Hello, " + name + "!");
+function greet() {
+    console.log('Hello from JavaScript!');
 }
-
-sayHello("World");
+greet();
